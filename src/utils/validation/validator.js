@@ -35,12 +35,13 @@ const userIdValidator = (req, res, next) => {
   }
 };
 
-const fileValidator = (req, file, cb) => {
-  // checking file type
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+const fileFilter = (req, file, cb) => {
+  const fileTypes = /jpeg|jpg|png/;
+  const mimetype = fileTypes.test(file.mimetype);
+  if (mimetype) {
     return cb(null, true);
   }
-  return cb('please upload only image');
+  return cb('Images only.');
 };
 
-module.exports = { validator, userIdValidator, fileValidator };
+module.exports = { validator, userIdValidator, fileFilter };
