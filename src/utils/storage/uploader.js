@@ -6,8 +6,9 @@ const { fileFilter } = require('../../utils/validation/validator');
 // Set Storage engine
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const path = '../../../public/uploads/';
-    fs.mkdir(path, { recursive: true });
+    const path = './uploads/';
+    // eslint-disable-next-line no-sync
+    fs.mkdirSync(path, { recursive: true });
     return cb(null, path);
   },
   filename(req, file, cb) {

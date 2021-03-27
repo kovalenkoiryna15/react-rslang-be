@@ -11,7 +11,7 @@ const {
 const { upload } = require('../../utils/storage/uploader');
 
 router.post('/', validator(user, 'body'), async (req, res) => {
-  upload(req, res, err => async () => {
+  upload(req, res, async err => {
     if (err) {
       return res
         .status(400)
