@@ -27,14 +27,12 @@ const { userIdValidator } = require('./utils/validation/validator');
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
-function checkOrigin(origin, callback) {
-  return callback(null, true);
-}
-
 app.use(helmet());
+
 app.use(
   cors({
-    origin: checkOrigin
+    credentials: true,
+    origin: true
   })
 );
 
