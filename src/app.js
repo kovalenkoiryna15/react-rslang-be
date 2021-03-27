@@ -26,8 +26,23 @@ const { userIdValidator } = require('./utils/validation/validator');
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
+const allowedOrigins = ['http://localhost:3000', 'https://web.postman.co/'];
+
 app.use(helmet());
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const massage =
+          'The CORS policy for this site does not ' +
+          'allow access from the specified Origin.';
+        return callback(new Error(massage), false);
+      }
+      return callback(null, true);
+    }
+  })
+);
 app.use(express.json());
 
 app.use('/files', express.static(path.join(__dirname, '../files')));
