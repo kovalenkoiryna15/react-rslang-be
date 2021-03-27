@@ -64,9 +64,18 @@ const getAll = async (userId, group, page, perPage, filter) => {
       }
     });
   }
+
+  if (page) {
+    matches.push({
+      $match: {
+        page
+      }
+    });
+  }
+
   const facet = {
     $facet: {
-      paginatedResults: [{ $limit: perPage }],
+      paginatedResults: [{ $skip: page * perPage }, { $limit: perPage }],
       totalCount: [
         {
           $count: 'count'
