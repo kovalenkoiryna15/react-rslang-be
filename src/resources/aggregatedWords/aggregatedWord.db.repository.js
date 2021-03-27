@@ -49,15 +49,19 @@ const getAll = async (userId, group, page, perPage, filter) => {
 
   const matches = [];
 
-  if (group || group === 0) {
+  if ((group || group === 0) && (page || page === 0)) {
+    matches.push({
+      $match: {
+        $and: [{ group }, { page }]
+      }
+    });
+  } else if ((group || group === 0) && !(page || page === 0)) {
     matches.push({
       $match: {
         group
       }
     });
-  }
-
-  if (page || page === 0) {
+  } else {
     matches.push({
       $match: {
         page
@@ -75,7 +79,7 @@ const getAll = async (userId, group, page, perPage, filter) => {
 
   const facet = {
     $facet: {
-      paginatedResults: [{ $skip: page * perPage }, { $limit: perPage }],
+      paginatedResults: [{ $limit: perPage }],
       totalCount: [
         {
           $count: 'count'
