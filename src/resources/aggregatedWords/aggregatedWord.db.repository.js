@@ -55,36 +55,17 @@ const getAll = async (userId, group, page, perPage, filter) => {
         group
       }
     });
-    if (page || page === 0) {
-      matches.map({
-        $match: {
-          page
-        }
-      });
-    }
-    if (filter) {
-      matches.map({
-        $match: {
-          ...filter
-        }
-      });
-    }
   }
 
-  if ((page || page === 0) && filter) {
+  if (page || page === 0) {
     matches.push({
       $match: {
         page
       }
     });
-    matches.map({
-      $match: {
-        ...filter
-      }
-    });
   }
 
-  if (!group && !page && filter) {
+  if (filter) {
     matches.push({
       $match: {
         ...filter
