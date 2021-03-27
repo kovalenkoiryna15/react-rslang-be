@@ -49,23 +49,42 @@ const getAll = async (userId, group, page, perPage, filter) => {
 
   const matches = [];
 
-  if (page || page === 0) {
-    matches.push({
-      $match: {
-        page
-      }
-    });
-  }
-
   if (group || group === 0) {
     matches.push({
       $match: {
         group
       }
     });
+    if (page || page === 0) {
+      matches.map({
+        $match: {
+          page
+        }
+      });
+    }
+    if (filter) {
+      matches.map({
+        $match: {
+          ...filter
+        }
+      });
+    }
   }
 
-  if (filter) {
+  if ((page || page === 0) && filter) {
+    matches.push({
+      $match: {
+        page
+      }
+    });
+    matches.map({
+      $match: {
+        ...filter
+      }
+    });
+  }
+
+  if (!group && !page && filter) {
     matches.push({
       $match: {
         ...filter
