@@ -36,16 +36,6 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', '*');
-  if (req.method === 'OPTIONS') {
-    res.headers('Access-Control-Allow-Methods', 'POST, PUT, GET, DELETE');
-    return res.status(200).json({});
-  }
-  next();
-});
-
 app.use(express.json());
 
 app.use('/files', express.static(path.join(__dirname, '../files')));
