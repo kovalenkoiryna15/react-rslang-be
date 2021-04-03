@@ -1,11 +1,7 @@
 const Statistics = require('./statistic.model');
-const { NOT_FOUND_ERROR } = require('../../errors/appErrors');
 
 const get = async userId => {
   const statistic = await Statistics.findOne({ userId });
-  if (!statistic) {
-    throw new NOT_FOUND_ERROR('statistic', `userId: ${userId}`);
-  }
 
   return statistic;
 };
