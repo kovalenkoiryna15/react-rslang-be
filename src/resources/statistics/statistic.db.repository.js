@@ -1,8 +1,14 @@
 const Statistics = require('./statistic.model');
 
 const get = async userId => {
-  const statistic = await Statistics.findOne({ userId });
-
+  let statistic = await Statistics.findOne({ userId });
+  if (!statistic) {
+    statistic = {
+      learnedWords: 0,
+      optional: {}
+    };
+    statistic = await upsert(userId, { ...statistic, userId });
+  }
   return statistic;
 };
 
