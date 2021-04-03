@@ -10,7 +10,10 @@ router.get('/', async (req, res) => {
 });
 
 router.put('/', validator(statistics, 'body'), async (req, res) => {
-  const statistic = await statisticService.upsert(req.userId, req.body);
+  const statistic = await statisticService.upsertDailyStatistic(
+    req.userId,
+    req.body
+  );
   res.status(OK).send(statistic.toResponse());
 });
 

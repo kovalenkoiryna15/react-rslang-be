@@ -19,6 +19,19 @@ const upsert = async (userId, statistic) =>
     { upsert: true, new: true }
   );
 
+const upsertDailyStatistic = async userId => {
+  const statistics = await Statistics.findOneAndUpdate(
+    { userId },
+    {
+      $inc: {
+        learnedWords: 1
+      }
+    },
+    { upsert: true, new: true }
+  );
+  return statistics;
+};
+
 const remove = async userId => Statistics.deleteOne({ userId });
 
-module.exports = { get, upsert, remove };
+module.exports = { get, upsert, remove, upsertDailyStatistic };
