@@ -32,13 +32,14 @@ const upsertDailyStatistic = async (userId, statistic) => {
       { upsert: true, new: true }
     );
   }
+  const count = statistic.optional.learnedWords;
   return Statistics.findOneAndUpdate(
     query,
     {
       $set: {
-        'statistics.$.day': statistic.optional.day,
-        'statistics.$.learnedWords': statistic.optional.learnedWords
-      }
+        'statistics.$.day': statistic.optional.day
+      },
+      $inc: { 'statistics.$.learnedWords': count }
     },
     { upsert: true, new: true }
   );
