@@ -5,7 +5,9 @@ const get = async userId => {
   if (!statistic) {
     statistic = {
       learnedWords: 0,
-      optional: {}
+      optional: {
+        statistics: []
+      }
     };
     statistic = await upsert(userId, { ...statistic, userId });
   }
