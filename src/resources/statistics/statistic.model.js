@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { addMethods } = require('../../utils/toResponse');
 
+const StatisticsSchema = new Schema({
+  _id: false,
+  day: String,
+  learnedWords: Number
+});
+
 const StatisticSchema = new Schema(
   {
     userId: {
@@ -11,6 +17,7 @@ const StatisticSchema = new Schema(
     learnedWords: {
       type: Number
     },
+    statistics: [StatisticsSchema],
     optional: {
       type: Object,
       required: false
